@@ -1,9 +1,20 @@
 /* =====================================================
    FARM2HOME – Frontend JavaScript
-   API Base URL: http://localhost:5000/api
+   API Base URL: auto-detected (local dev or Render prod)
+   =====================================================
+
+   HOW TO SET YOUR RENDER BACKEND URL:
+   Replace the RENDER_BACKEND_URL value below with your
+   actual Render Web Service URL after deploying, e.g.:
+     'https://farm2home-backend.onrender.com/api'
    ===================================================== */
 
-const API = 'http://localhost:5000/api';
+const RENDER_BACKEND_URL = '';   // ← paste your Render backend URL here
+
+const API = RENDER_BACKEND_URL
+  || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? 'http://localhost:5000/api'
+        : window.location.origin + '/api');
 
 // ===== STATE =====
 let cart = JSON.parse(localStorage.getItem('f2h_cart') || '[]');

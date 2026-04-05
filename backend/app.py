@@ -1,7 +1,9 @@
 """
 Farm2Home – Flask Backend API
-Run: python app.py
-API Base: http://localhost:5000/api
+Run locally : python app.py
+Run on Render: gunicorn app:app
+API Base     : http://localhost:5000/api  (local)
+             : https://<your-service>.onrender.com/api  (production)
 """
 
 from flask import Flask, request, jsonify, session
@@ -19,21 +21,44 @@ import os, re, uuid
 # ===== APP SETUP =====
 app = Flask(__name__)
 
-from datetime import timedelta
+# ------------------------------------------------------------------
+# Render provides DATABASE_URL starting with "postgres://"
+# but SQLAlchemy 2.x requires "postgresql://" — fix it here.
+# ------------------------------------------------------------------
+raw_db_url = os.environ.get(
+    'DATABASE_URL',
+    'postgresql://postgres:password@localhost:5432/farm2home'
+)
+if raw_db_url.startswith('postgres://'):
+    raw_db_url = raw_db_url.replace('postgres://', 'postgresql://', 1)
+
+# ------------------------------------------------------------------
+# Allowed CORS origins — set FRONTEND_URL env var on Render to your
+# static-site URL, e.g. https://farm2home.onrender.com
+# ------------------------------------------------------------------
+FRONTEND_URL = os.environ.get('FRONTEND_URL', '*')
+allowed_origins = [
+    'http://localhost:5500',
+    'http://127.0.0.1:5500',
+    'http://localhost:3000',
+]
+if FRONTEND_URL and FRONTEND_URL != '*':
+    allowed_origins.append(FRONTEND_URL)
 
 app.config.update(
     SECRET_KEY=os.environ.get('SECRET_KEY', 'farm2home_super_secret_key_2025'),
-    SQLALCHEMY_DATABASE_URI="sqlite:///site.db",
+    SQLALCHEMY_DATABASE_URI=raw_db_url,
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
     JWT_SECRET_KEY=os.environ.get('JWT_SECRET', 'farm2home_jwt_secret_2025'),
     JWT_ACCESS_TOKEN_EXPIRES=timedelta(days=7),
-    JSON_SORT_KEYS=False
+    JSON_SORT_KEYS=False,
 )
 
 db      = SQLAlchemy(app)
 bcrypt  = Bcrypt(app)
 jwt     = JWTManager(app)
-CORS(app, origins=['http://localhost:3000', 'http://127.0.0.1:5500', '*'],
+CORS(app,
+     origins=allowed_origins if FRONTEND_URL != '*' else '*',
      supports_credentials=True)
 
 # ===================================================================
@@ -925,12 +950,14 @@ def seed_data():
 
 
 # ===================================================================
-# MAIN
+# DB INIT — runs on every startup (local AND Render via gunicorn)
 # ===================================================================
+with app.app_context():
+    db.create_all()
+    seed_data()
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-        seed_data()
-        print("🌿 Farm2Home backend is running at http://localhost:5000")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    port = int(os.environ.get('PORT', 5000))
+    debug = os.environ.get('FLASK_ENV', 'development') != 'production'
+    print(f"🌿 Farm2Home backend is running at http://localhost:{port}")
+    app.run(debug=debug, host='0.0.0.0', port=port)
