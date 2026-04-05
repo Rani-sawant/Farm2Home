@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Farm2Home – Fresh Agri-Products Direct from Farmers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      <span class="logo-icon">🌿</span>
+      <span class="logo-text">Farm<span class="logo-accent">2</span>Home</span>
+    </div>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="nav-link active">Home</a></li>
+      <li><a href="#products" class="nav-link">Products</a></li>
+      <li><a href="#categories" class="nav-link">Categories</a></li>
+      <li><a href="#farmers" class="nav-link">Farmers</a></li>
+      <li><a href="#about" class="nav-link">About Us</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+
+    <div class="nav-icons">
+      <button class="icon-btn" id="searchToggle" title="Search"><i class="fas fa-search"></i></button>
+      <button class="icon-btn" id="wishlistBtn" title="Wishlist">
+        <i class="fas fa-heart"></i>
+        <span class="badge" id="wishlistCount">0</span>
+      </button>
+      <button class="icon-btn" id="cartBtn" title="Cart">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="badge" id="cartCount">0</span>
+      </button>
+      <button class="btn-auth" id="loginBtn">Login</button>
+    </div>
+
+    <button class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-bar" id="searchBar">
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search vegetables, fruits, grains..." />
+      <button id="searchBtn"><i class="fas fa-search"></i> Search</button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</nav>
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero" id="home">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-badge">🌱 100% Organic & Fresh</span>
+    <h1 class="hero-title">Fresh Agri-Products<br><span class="hero-accent">Directly from Farmers</span><br>to Your Home</h1>
+    <p class="hero-sub">Support local farmers, enjoy fresh produce daily. No middlemen — just pure farm-to-table goodness delivered right to your doorstep.</p>
+    <div class="hero-btns">
+      <a href="#products" class="btn-primary">Shop Now <i class="fas fa-arrow-right"></i></a>
+      <a href="#categories" class="btn-outline">Explore Products</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">2,400+</span><span class="stat-lbl">Happy Farmers</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">50K+</span><span class="stat-lbl">Customers</span></div>
+      <div class="stat-divider"></div>
+      <div class="stat"><span class="stat-num">500+</span><span class="stat-lbl">Products</span></div>
+    </div>
+  </div>
+  <div class="hero-scroll"><i class="fas fa-chevron-down"></i></div>
+</section>
+
+<!-- ===== CATEGORIES ===== -->
+<section class="categories" id="categories">
+  <div class="section-header">
+    <span class="section-tag">Browse by Type</span>
+    <h2 class="section-title">Product Categories</h2>
+    <p class="section-sub">Discover fresh produce across every category, sourced straight from farms near you.</p>
+  </div>
+  <div class="categories-grid">
+    <div class="category-card" data-category="vegetables" onclick="filterByCategory('vegetables')">
+      <div class="cat-icon">🥦</div>
+      <h3>Vegetables</h3>
+      <p>120+ Items</p>
+      <div class="cat-arrow"><i class="fas fa-arrow-right"></i></div>
+    </div>
+    <div class="category-card" data-category="fruits" onclick="filterByCategory('fruits')">
+      <div class="cat-icon">🍎</div>
+      <h3>Fruits</h3>
+      <p>85+ Items</p>
+      <div class="cat-arrow"><i class="fas fa-arrow-right"></i></div>
+    </div>
+    <div class="category-card" data-category="grains" onclick="filterByCategory('grains')">
+      <div class="cat-icon">🌾</div>
+      <h3>Grains</h3>
+      <p>60+ Items</p>
+      <div class="cat-arrow"><i class="fas fa-arrow-right"></i></div>
+    </div>
+    <div class="category-card" data-category="dairy" onclick="filterByCategory('dairy')">
+      <div class="cat-icon">🥛</div>
+      <h3>Dairy</h3>
+      <p>40+ Items</p>
+      <div class="cat-arrow"><i class="fas fa-arrow-right"></i></div>
+    </div>
+    <div class="category-card" data-category="spices" onclick="filterByCategory('spices')">
+      <div class="cat-icon">🌶️</div>
+      <h3>Spices</h3>
+      <p>70+ Items</p>
+      <div class="cat-arrow"><i class="fas fa-arrow-right"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURED PRODUCTS ===== -->
+<section class="products" id="products">
+  <div class="section-header">
+    <span class="section-tag">Farm Fresh</span>
+    <h2 class="section-title">Featured Products</h2>
+    <p class="section-sub">Hand-picked fresh produce from our verified farmers, delivered to your home.</p>
+  </div>
+
+  <!-- Filter Tabs -->
+  <div class="filter-tabs">
+    <button class="filter-btn active" data-filter="all" onclick="filterProducts('all', this)">All</button>
+    <button class="filter-btn" data-filter="vegetables" onclick="filterProducts('vegetables', this)">Vegetables</button>
+    <button class="filter-btn" data-filter="fruits" onclick="filterProducts('fruits', this)">Fruits</button>
+    <button class="filter-btn" data-filter="grains" onclick="filterProducts('grains', this)">Grains</button>
+    <button class="filter-btn" data-filter="dairy" onclick="filterProducts('dairy', this)">Dairy</button>
+    <button class="filter-btn" data-filter="spices" onclick="filterProducts('spices', this)">Spices</button>
+  </div>
+
+  <div class="products-grid" id="productsGrid">
+    <!-- Products injected by JS -->
+  </div>
+
+  <div class="load-more-wrap">
+    <button class="btn-load-more" id="loadMoreBtn">Load More Products <i class="fas fa-chevron-down"></i></button>
+  </div>
+</section>
+
+<!-- ===== WHY CHOOSE US ===== -->
+<section class="why-us" id="about">
+  <div class="why-bg"></div>
+  <div class="section-header light">
+    <span class="section-tag light-tag">Our Promise</span>
+    <h2 class="section-title light-title">Why Choose Farm2Home?</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">🌿</div>
+      <h3>100% Fresh & Organic</h3>
+      <p>Every product is harvested fresh and delivered within 24 hours. No preservatives, no chemicals.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">💰</div>
+      <h3>Affordable Prices</h3>
+      <p>By cutting out the middleman, we ensure the best prices for customers and fair wages for farmers.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">👨‍🌾</div>
+      <h3>Support Local Farmers</h3>
+      <p>Every purchase directly supports a farming family. You're not just buying food — you're changing lives.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🚚</div>
+      <h3>Fast Delivery</h3>
+      <p>Same-day delivery in select cities, next-day across India. Fresh produce at your doorstep.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🔒</div>
+      <h3>Secure Payments</h3>
+      <p>Multiple secure payment options: UPI, Net Banking, Cards, and Cash on Delivery.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">♻️</div>
+      <h3>Eco-Friendly Packaging</h3>
+      <p>We use 100% biodegradable packaging to reduce our environmental footprint.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="how-it-works">
+  <div class="section-header">
+    <span class="section-tag">Simple Process</span>
+    <h2 class="section-title">How It Works</h2>
+  </div>
+  <div class="steps-container">
+    <div class="step">
+      <div class="step-number">01</div>
+      <div class="step-icon">👨‍🌾</div>
+      <h3>Farmers List Products</h3>
+      <p>Verified farmers register and list their fresh produce with pricing and availability.</p>
+    </div>
+    <div class="step-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
+    <div class="step">
+      <div class="step-number">02</div>
+      <div class="step-icon">🛒</div>
+      <h3>Customers Order Online</h3>
+      <p>Browse, choose, and order your favourite fresh products with easy checkout.</p>
+    </div>
+    <div class="step-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
+    <div class="step">
+      <div class="step-number">03</div>
+      <div class="step-icon">📦</div>
+      <h3>We Pack & Dispatch</h3>
+      <p>Products are packed in eco-friendly packaging and handed to our delivery network.</p>
+    </div>
+    <div class="step-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
+    <div class="step">
+      <div class="step-number">04</div>
+      <div class="step-icon">🏠</div>
+      <h3>Delivered to Your Home</h3>
+      <p>Fresh farm produce arrives at your doorstep — same day or next day delivery.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FARMERS ===== -->
+<section class="farmers" id="farmers">
+  <div class="section-header">
+    <span class="section-tag">The People Behind</span>
+    <h2 class="section-title">Meet Our Farmers</h2>
+    <p class="section-sub">Real people, real farms. Know who grows your food.</p>
+  </div>
+  <div class="farmers-grid" id="farmersGrid">
+    <!-- injected by JS -->
+  </div>
+</section>
+
+<!-- ===== REVIEWS ===== -->
+<section class="reviews">
+  <div class="section-header">
+    <span class="section-tag">Customer Love</span>
+    <h2 class="section-title">What Our Customers Say</h2>
+  </div>
+  <div class="reviews-slider" id="reviewsSlider">
+    <!-- injected by JS -->
+  </div>
+  <div class="slider-dots" id="sliderDots"></div>
+</section>
+
+<!-- ===== NEWSLETTER ===== -->
+<section class="newsletter">
+  <div class="newsletter-inner">
+    <div class="nl-icon">📧</div>
+    <h2>Get Fresh Deals in Your Inbox</h2>
+    <p>Subscribe to get exclusive offers, seasonal produce alerts, and farmer stories.</p>
+    <form class="nl-form" id="newsletterForm" onsubmit="subscribeNewsletter(event)">
+      <input type="email" placeholder="Enter your email address" required id="nlEmail"/>
+      <button type="submit">Subscribe <i class="fas fa-paper-plane"></i></button>
+    </form>
+    <p class="nl-note">No spam. Unsubscribe anytime. 🌿</p>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq" id="faq">
+  <div class="section-header">
+    <span class="section-tag">Help Center</span>
+    <h2 class="section-title">Frequently Asked Questions</h2>
+  </div>
+  <div class="faq-list" id="faqList">
+    <!-- injected by JS -->
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="contact" id="contact">
+  <div class="section-header">
+    <span class="section-tag">Get in Touch</span>
+    <h2 class="section-title">Customer Support</h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+        <div>
+          <h4>Phone Support</h4>
+          <p>+91 98765 43210</p>
+          <small>Mon–Sat, 8AM–8PM</small>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+        <div>
+          <h4>Email</h4>
+          <p>support@farm2home.in</p>
+          <small>Reply within 24 hours</small>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <div>
+          <h4>Office</h4>
+          <p>Farm2Home HQ, Pune, Maharashtra</p>
+          <small>India – 411001</small>
+        </div>
+      </div>
+    </div>
+
+    <form class="contact-form" id="contactForm" onsubmit="submitContact(event)">
+      <h3>Send Us a Message</h3>
+      <div class="form-row">
+        <input type="text" placeholder="Your Name" required id="cName"/>
+        <input type="email" placeholder="Email Address" required id="cEmail"/>
+      </div>
+      <input type="text" placeholder="Subject" required id="cSubject"/>
+      <textarea placeholder="Write your message here..." rows="5" required id="cMessage"></textarea>
+      <button type="submit" class="btn-primary">Send Message <i class="fas fa-paper-plane"></i></button>
+    </form>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo">
+        <span class="logo-icon">🌿</span>
+        <span class="logo-text" style="color:#fff">Farm<span class="logo-accent">2</span>Home</span>
+      </div>
+      <p>Connecting farmers and families through fresh, organic produce. Farm to table, every day.</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#farmers">Our Farmers</a></li>
+        <li><a href="#about">About Us</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-links">
+      <h4>Categories</h4>
+      <ul>
+        <li><a href="#">Vegetables</a></li>
+        <li><a href="#">Fruits</a></li>
+        <li><a href="#">Grains & Pulses</a></li>
+        <li><a href="#">Dairy Products</a></li>
+        <li><a href="#">Spices & Herbs</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-links">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#contact">Contact Us</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#">Track Order</a></li>
+        <li><a href="#">Returns Policy</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 Farm2Home. All rights reserved. Made with 💚 for Indian farmers.</p>
+    <div class="payment-icons">
+      <span>UPI</span><span>Visa</span><span>Mastercard</span><span>RuPay</span><span>COD</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== MODALS ===== -->
+
+<!-- Login Modal -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+    <div class="modal-tabs">
+      <button class="tab-btn active" id="loginTab" onclick="switchTab('login')">Login</button>
+      <button class="tab-btn" id="registerTab" onclick="switchTab('register')">Register</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <h2>Welcome Back 🌿</h2>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="loginEmail" placeholder="you@example.com" required/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="pass-wrap">
+          <input type="password" id="loginPassword" placeholder="Enter password" required/>
+          <i class="fas fa-eye" id="toggleLoginPass" onclick="togglePass('loginPassword','toggleLoginPass')"></i>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary full">Login <i class="fas fa-sign-in-alt"></i></button>
+      <p class="auth-switch">Don't have an account? <a href="#" onclick="switchTab('register')">Register</a></p>
+    </form>
+
+    <!-- Register Form -->
+    <form id="registerForm" style="display:none" onsubmit="handleRegister(event)">
+      <h2>Join Farm2Home 🌱</h2>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="regName" placeholder="Your full name" required/>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="regEmail" placeholder="you@example.com" required/>
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" id="regPhone" placeholder="+91 XXXXX XXXXX" required/>
+      </div>
+      <div class="form-group">
+        <label>I am a</label>
+        <select id="regRole">
+          <option value="customer">Customer</option>
+          <option value="farmer">Farmer</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="pass-wrap">
+          <input type="password" id="regPassword" placeholder="Create password" required/>
+          <i class="fas fa-eye" id="toggleRegPass" onclick="togglePass('regPassword','toggleRegPass')"></i>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary full">Create Account <i class="fas fa-user-plus"></i></button>
+      <p class="auth-switch">Already have an account? <a href="#" onclick="switchTab('login')">Login</a></p>
+    </form>
+  </div>
+</div>
+
+<!-- Cart Modal -->
+<div class="modal-overlay" id="cartModal">
+  <div class="modal modal-wide">
+    <button class="modal-close" onclick="closeModal('cartModal')">&times;</button>
+    <h2>🛒 Your Cart</h2>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer" id="cartFooter"></div>
+  </div>
+</div>
+
+<!-- Wishlist Modal -->
+<div class="modal-overlay" id="wishlistModal">
+  <div class="modal modal-wide">
+    <button class="modal-close" onclick="closeModal('wishlistModal')">&times;</button>
+    <h2>❤️ Your Wishlist</h2>
+    <div id="wishlistItems" class="cart-items"></div>
+  </div>
+</div>
+
+<!-- Checkout Modal -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal modal-wide">
+    <button class="modal-close" onclick="closeModal('checkoutModal')">&times;</button>
+    <h2>💳 Checkout</h2>
+
+    <div class="checkout-grid">
+      <div class="checkout-left">
+        <h3>Delivery Address</h3>
+        <div class="form-group">
+          <input type="text" id="chkName" placeholder="Full Name" required/>
+        </div>
+        <div class="form-group">
+          <input type="text" id="chkPhone" placeholder="Phone Number" required/>
+        </div>
+        <div class="form-group">
+          <textarea id="chkAddress" placeholder="Street Address" rows="3" required></textarea>
+        </div>
+        <div class="form-row">
+          <input type="text" id="chkCity" placeholder="City"/>
+          <input type="text" id="chkPincode" placeholder="Pincode"/>
+        </div>
+
+        <h3 style="margin-top:1.5rem">Payment Method</h3>
+        <div class="payment-methods">
+          <label class="pay-option"><input type="radio" name="payment" value="upi" checked/> <span>📱 UPI</span></label>
+          <label class="pay-option"><input type="radio" name="payment" value="netbanking"/> <span>🏦 Net Banking</span></label>
+          <label class="pay-option"><input type="radio" name="payment" value="credit_card"/> <span>💳 Credit Card</span></label>
+          <label class="pay-option"><input type="radio" name="payment" value="debit_card"/> <span>💳 Debit Card</span></label>
+          <label class="pay-option"><input type="radio" name="payment" value="cod"/> <span>💵 Cash on Delivery</span></label>
+        </div>
+
+        <!-- UPI Fields -->
+        <div id="upiFields" class="pay-fields">
+          <input type="text" placeholder="Enter UPI ID (e.g. user@upi)" id="upiId"/>
+        </div>
+        <!-- Card Fields -->
+        <div id="cardFields" class="pay-fields" style="display:none">
+          <input type="text" placeholder="Card Number (16 digits)" maxlength="16" id="cardNum"/>
+          <div class="form-row">
+            <input type="text" placeholder="MM/YY" maxlength="5" id="cardExp"/>
+            <input type="text" placeholder="CVV" maxlength="3" id="cardCvv"/>
+          </div>
+          <input type="text" placeholder="Cardholder Name" id="cardName"/>
+        </div>
+      </div>
+
+      <div class="checkout-right">
+        <h3>Order Summary</h3>
+        <div id="checkoutSummary"></div>
+        <button class="btn-primary full" style="margin-top:1.5rem" onclick="placeOrder()">
+          Place Order <i class="fas fa-check-circle"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Order Success Modal -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal text-center">
+    <div class="success-anim">✅</div>
+    <h2>Order Placed Successfully!</h2>
+    <p id="successMsg">Your fresh produce is on the way! 🚚</p>
+    <p id="orderIdDisplay" style="font-weight:600;color:var(--green)"></p>
+    <div class="order-status">
+      <div class="status-step done">📦 Order Placed</div>
+      <div class="status-step">🔄 Processing</div>
+      <div class="status-step">🚚 Shipped</div>
+      <div class="status-step">🏠 Delivered</div>
+    </div>
+    <button class="btn-primary" onclick="closeModal('successModal')" style="margin-top:1.5rem">Continue Shopping</button>
+  </div>
+</div>
+
+<!-- Order History Modal -->
+<div class="modal-overlay" id="ordersModal">
+  <div class="modal modal-wide">
+    <button class="modal-close" onclick="closeModal('ordersModal')">&times;</button>
+    <h2>📋 My Orders</h2>
+    <div id="ordersList"></div>
+  </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+
+<!-- Back to Top -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<script src="app.js"></script>
+</body>
+</html>
